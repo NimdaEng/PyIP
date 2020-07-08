@@ -1,12 +1,10 @@
 #! python3
 #-*-coding: utf-8 -*-
-import sys
-import os
+import sys, os, socket
 import tkinter as tk
-import socket
-from ConfigParser import SafeConfigParser
+from configparser import SafeConfigParser
 import codecs
-import tkMessageBox as messagebox  # Python 2
+from tkinter import messagebox
 from tkinter.font import Font
 
 root = tk.Tk()
@@ -19,10 +17,12 @@ def mouseHover(win):
     width = 200
     height = 70
     w_top_right = (win.winfo_screenwidth()) - (width)
+    win.update_idletasks()
     win.geometry('{}x{}+{}+{}'.format(width, height, w_top_right, 0))
     win.attributes('-alpha',0.8)
     win.overrideredirect(1)
-    ip.set(get_ip_address())
+    ip.set(get_ip_address())    
+    print("XXXXXXXXXXXXX");
 
 def readConf():
 
@@ -41,13 +41,13 @@ def readConf():
         messagebox.showinfo("เกิดข้อผิดพลาด", "หา config.ini ไม่พบ. ลองใหม่")
         return False
 def getHost():
-    #return socket.gethostname()
-    return unicode(socket.gethostname(),'tis-620')
+    return socket.gethostname()
+    #return unicode(socket.gethostname(),'tis-620')
 
 def get_ip_address():
     try:
         s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        s.settimeout(10)
+        s.settimeout(100)
         s.connect((readConf(), 80))
         return s.getsockname()[0]
     except socket.error:
@@ -65,14 +65,25 @@ def center(win):
     tk.Label(win,textvariable=pcname,font=12, fg="deepskyblue").pack()
     tk.Label(win,textvariable=ip,font=16, fg="red",cursor="hand2").pack()
     tk.Label(win,text="Copyright © จตุรภัทร ศิริบูรณ์",fg="dimgray").pack()
+    
+
+def set_ip():
+    #ip.set(get_ip_address())
+    #messagebox.showinfo("เกิดข้อผิดพลาด", get_ip_address())
+    print("XXXXXXXXXXXXX");
+
+def callback():
+    if messagebox.askokcancel("ห้ามปิดโปรแกรมนี้", get_ip_address(), default="cancel"):        
+        #root.destroy()
+        ip.set(get_ip_address())
+    else :
+        ip.set(get_ip_address())
 
 
 if __name__ == "__main__":
     center(root)
     ip.set(get_ip_address())
     pcname.set(getHost())
-    root.bind("<Enter>", mouseHover(root))
-    root.bind('<Button-1>', mouseHover(root))
-    root.bind('<Double-1>', mouseHover(root))
-
+    root.protocol("WM_DELETE_WINDOW", callback) # ป้องกันการ close windows
+    root.bind("<Enter>", set_ip())
     root.mainloop()
