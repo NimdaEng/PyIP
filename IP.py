@@ -2,7 +2,7 @@
 #-*-coding: utf-8 -*-
 import sys
 import os
-import Tkinter as tk
+import tkinter as tk
 import socket
 from ConfigParser import SafeConfigParser
 import codecs
