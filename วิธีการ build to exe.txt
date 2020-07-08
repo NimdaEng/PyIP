@@ -1,0 +1,12 @@
+ใช้คำสั่ง
+py -2 setup.txt py2exe
+
+
+
+
+echo "# PyIP" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git remote add origin https://github.com/NimdaEng/PyIP.git
+git push -u origin master

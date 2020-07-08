@@ -1,0 +1,14 @@
+from distutils.core import setup
+import py2exe
+setup(
+windows=[{
+        "script": "IP.py",
+        "icon_resources": [(0x0004, "ip.ico")]
+    }],
+name = "Jhaturaphat Siriboon",
+version = "1.0",
+description = "View ip computer",
+author = "Jhaturaphat Siriboon",
+author_email ="umt.eng52@gmail.com",
+license = "Jaturapat Siriboon",
+    )
