@@ -2,7 +2,7 @@
 #-*-coding: utf-8 -*-
 import sys, os, socket
 import tkinter as tk
-from configparser import SafeConfigParser
+import configparser
 import codecs
 from tkinter import messagebox
 from tkinter.font import Font
@@ -14,39 +14,37 @@ pcname = tk.StringVar()
 
 
 def readConf():
-
-    parser = SafeConfigParser()
+    parser = configparser.ConfigParser()    
     try:
-        with codecs.open('config.ini', 'r', encoding='utf-8') as f:
-            parser.readfp(f)
+        with codecs.open('config.ini', 'r', encoding='utf-8') as f:            
+            parser.read_file(f)
             return parser.get('gateway', 'ip')
     except IOError:
         parser.write(open('config.ini', 'w'))
         parser.add_section('gateway')
-        parser.set('gateway','ip','192.168.1.1')
+        parser.set('gateway','ip','192.168.100.1')
         with codecs.open('config.ini','w') as f:
             parser.write(f)
-        messagebox.showinfo("เกิดข้อผิดพลาด", "หา config.ini ไม่พบ. ลองใหม่")
+            messagebox.showinfo("เกิดข้อผิดพลาด", "หา config.ini ไม่พบ. ลองใหม่")
         return False
 
 def getHost():
     return socket.gethostname()
-    #return unicode(socket.gethostname(),'tis-620')
+    # return unicode(socket.gethostname(),'tis-620')
 
 def get_ip_address():
     try:
-        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM) 
         s.settimeout(10)
         result = s.connect_ex((readConf(), 80))
         if result:
-            return "เรียก IP ใหม่"
+            return "เรียก IP ใหม่-iL"
         else:
             return s.getsockname()[0] 
     except:
-        return "เรียก IP ใหม่"
+        return "เรียก IP ใหม่-ex"
     finally:
-        s.close()         
-        
+        s.close()      
 
 def center(win):
     width = 200 #win.winfo_width()
@@ -59,12 +57,10 @@ def center(win):
     win.bind("<Button-1>", set_ip)
     tk.Label(win,textvariable=pcname,font=12, fg="deepskyblue").pack()
     tk.Label(win,textvariable=ip,font=16, fg="red",cursor="hand2").pack()
-    tk.Label(win,text="Copyright © จตุรภัทร ศิริบูรณ์",fg="dimgray").pack()
+    tk.Label(win,text="Copyright © จตุรภัทร ศิริบูรณ์", fg="dimgray").pack()
     
 
-def set_ip(event):
-    #ip.set(get_ip_address())
-    #messagebox.showinfo("เกิดข้อผิดพลาด", get_ip_address())
+def set_ip(event):    
     ip.set(get_ip_address())
     print(get_ip_address());
 
