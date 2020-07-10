@@ -1,6 +1,10 @@
 ใช้คำสั่ง
 py -2 setup.txt py2exe
 
+####################################################
+pip install PyInstaller
+pyinstaller --bootloader-ignore-signals --noconsole --clean --add-data "config.ini;." -i ip.ico IP.py
+####################################################
 
 
 
