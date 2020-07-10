@@ -1,5 +1,3 @@
-# PyIP
-
 1. เปิด ไฟล์ config.ini เปลี่ยน ip = <เป็น IP Gateway ของท่าน หรือ ip อะก็ได้ที่สามารถ ping ตลอดเวลาในวง networkของท่าน>
 2. ก๊อบปี้โฟลเดอร์ PyIP วางไว้ที่ไดร์  C:\
 3. สร้าง shortcut คลิกขวาที่ IP.exe -> send to -> Desktop
